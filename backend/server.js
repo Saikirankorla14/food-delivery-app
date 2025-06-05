@@ -7,17 +7,26 @@ const cors = require("cors");
 const restaurantRoutes = require("./routes/restaurants");
 const menuRoutes = require("./routes/menu");
 const orderRoutes = require("./routes/orders");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Middleware - CORS should be before routes
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+// Body parser middleware
 app.use(express.json());
 
 // Routes
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/menu", menuRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/auth", authRoutes);
 
 // MongoDB Connection
 mongoose
